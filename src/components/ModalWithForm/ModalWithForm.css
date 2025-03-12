@@ -30,6 +30,12 @@
   font-size: 16px;
 }
 
+.modal__label {
+  padding-top: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
 .modal__input {
   display: block;
   border: none;
@@ -57,18 +63,15 @@
   padding-bottom: 12px;
 }
 
-.modal__label {
-  padding-top: 24px;
-}
-
 .modal__label_type_radio {
   padding-top: 8px;
   margin: 0;
+  color: #00000080;
+  flex-direction: row;
 }
 
-.modal__form {
-  display: flex;
-  flex-direction: column;
+.modal__label_type_radio:has(input:checked) {
+  color: black;
 }
 
 .modal__radio-btns {
@@ -80,7 +83,7 @@
 
 .modal__radio-input {
   margin-right: 5px;
-  color: #000000;
+  accent-color: black;
 }
 
 .modal__submit-btn {
