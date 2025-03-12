@@ -23,21 +23,17 @@ function App() {
   const [selectedItem, setSelectedItem] = useState(null);
 
   const openModal = (modalType, item = null) => {
-    setSelectedItem(item); // Set item for item modal
-    setIsModalOpen(modalType); // Set the modal type
+    setSelectedItem(item);
+    setIsModalOpen(modalType);
   };
 
-  // Function to close the modal
   const closeModal = () => {
-    setIsModalOpen(null); // Close modal by resetting to null
-    setSelectedItem(null); // Reset selected item
+    setIsModalOpen(null);
+    setSelectedItem(null);
   };
-  // Example weather data (you can replace this with an API call later)
 
-  // Example clothing items
   const [clothingItems, setClothingItems] = useState(defaultClothingItems);
 
-  // Function to handle item selection
   const handleItemClick = (item) => {
     openModal("itemDetails", item);
   };

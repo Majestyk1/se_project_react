@@ -7,10 +7,6 @@
   overflow: hidden;
 }
 
-/* .weather__location {
-  font-size: 18px;
-} */
-
 .weather__logo {
   object-fit: cover;
   object-position: right top;

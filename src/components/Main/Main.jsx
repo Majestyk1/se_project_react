@@ -5,7 +5,6 @@ import { defaultClothingItems } from "../../utils/constants.js";
 import "./Main.css";
 
 const Main = ({ weatherData, clothingItems, onSelectItem }) => {
-  // Function to filter clothing items based on temperature
   const filteredClothing = clothingItems.filter((item) => {
     return (
       (item.weather === "cold" && weatherData.temp < 10) ||

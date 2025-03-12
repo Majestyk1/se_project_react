@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import "./ModalWithForm.css";
 
 const ModalWithForm = ({ onClose, isOpen, children, buttonText, title }) => {
-  // Close the modal when Escape key is pressed
   useEffect(() => {
     const handleEscKey = (e) => {
       if (e.key === "Escape") {
@@ -16,7 +15,6 @@ const ModalWithForm = ({ onClose, isOpen, children, buttonText, title }) => {
     };
   }, [onClose]);
 
-  // Close the modal when clicking outside the modal content
   const handleOverlayClick = (e) => {
     if (e.target === e.currentTarget) {
       onClose();
