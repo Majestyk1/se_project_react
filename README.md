@@ -11,4 +11,3 @@ This project is a React-based front end for the WTWR app. It displays clothing r
 - Shows the current location in the header.
 - Filters clothing based on temperature.
 - Modals for adding new garments and viewing clothing images.
-- Responsive design following Figma guidelines.
