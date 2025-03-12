@@ -80,6 +80,7 @@
 
 .modal__radio-input {
   margin-right: 5px;
+  color: #000000;
 }
 
 .modal__submit-btn {
@@ -94,8 +95,4 @@
 
 .modal__submit-btn:hover {
   background-color: #00000099;
-}
-
-.modal_type_createItem {
-  background-color: #0000004d;
 }
