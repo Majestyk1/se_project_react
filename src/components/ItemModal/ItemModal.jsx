@@ -1,16 +1,10 @@
 import "./ItemModal.css";
+import useModalClose from "../../hooks/useModalClose";
 
 function ItemModal({ isOpen, item, onClose }) {
-  const handleOverlayClick = (e) => {
-    if (e.target === e.currentTarget) {
-      onClose();
-    }
-  };
+  useModalClose(isOpen, onClose);
   return (
-    <div
-      className={`modal ${isOpen ? "modal_open" : ""}`}
-      onClick={handleOverlayClick}
-    >
+    <div className={`modal ${isOpen ? "modal_open" : ""}`}>
       <div className="modal__content_type_image">
         <button type="button" className="modal__close-btn" onClick={onClose}>
           &#10005;
