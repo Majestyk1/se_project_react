@@ -1,6 +1,6 @@
 import "./itemModal.css";
 
-function itemModal({ isOpen, item, onClose }) {
+function ItemModal({ isOpen, item, onClose }) {
   const handleOverlayClick = (e) => {
     if (e.target === e.currentTarget) {
       onClose();
@@ -32,4 +32,4 @@ function itemModal({ isOpen, item, onClose }) {
   );
 }
 
-export default itemModal;
+export default ItemModal;
