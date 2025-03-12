@@ -15,7 +15,7 @@ const Main = ({ weatherData, clothingItems, onSelectItem }) => {
   return (
     <main className="main">
       <WeatherCard weatherData={weatherData} />
-      <section className="cards" style={{ fontFamily: "CabinetGrotesk-Bold" }}>
+      <section className="cards">
         <p className="cards__weather-info">
           Today is {weatherData.temp} &deg; F / you may want to wear:
         </p>

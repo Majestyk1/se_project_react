@@ -9,7 +9,7 @@ const Header = ({ weatherData, openModal }) => {
   });
 
   return (
-    <header className="header" style={{ fontFamily: "CabinetGrotesk-Bold" }}>
+    <header className="header">
       <img className="header__logo" src={logo} alt="WTWR Logo" />
       <div className="header__info">
         <p className="header__date">{currentDate}</p>

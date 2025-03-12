@@ -4,10 +4,7 @@ import sunny from "../../assets/sunny.png";
 
 const WeatherCard = ({ weatherData }) => {
   return (
-    <section
-      className="weather__card"
-      style={{ fontFamily: "CabinetGrotesk-Bold" }}
-    >
+    <section className="weather__card">
       <p className="weather__temp">{weatherData.temp} °F</p>
       <img className="weather__logo" src={sunny} alt="sunny" />
     </section>

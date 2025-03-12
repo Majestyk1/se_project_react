@@ -26,10 +26,7 @@ const ModalWithForm = ({ onClose, isOpen, children, buttonText, title }) => {
       className={`modal ${isOpen ? "modal_open" : ""}`}
       onClick={handleOverlayClick}
     >
-      <div
-        className="modal__content"
-        style={{ fontFamily: "CabinetGrotesk-Bold" }}
-      >
+      <div className="modal__content">
         <h2 className="modal__title">{title}</h2>
         <button type="button" className="modal__close-btn" onClick={onClose}>
           &#10005;

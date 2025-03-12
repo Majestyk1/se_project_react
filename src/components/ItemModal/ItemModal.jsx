@@ -11,10 +11,7 @@ function ItemModal({ isOpen, item, onClose }) {
       className={`modal ${isOpen ? "modal_open" : ""}`}
       onClick={handleOverlayClick}
     >
-      <div
-        className="modal__content_type_image"
-        style={{ fontFamily: "CabinetGrotesk-Bold" }}
-      >
+      <div className="modal__content_type_image">
         <button type="button" className="modal__close-btn" onClick={onClose}>
           &#10005;
         </button>
