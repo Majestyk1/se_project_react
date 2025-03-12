@@ -1,0 +1,43 @@
+.header {
+  display: flex;
+  align-items: center;
+  padding: 32px 0 28px;
+  max-height: 40px;
+  font-size: 20px;
+}
+
+.header__logo {
+  margin-right: 24px;
+}
+
+.header__info {
+  display: flex;
+  margin: 0;
+}
+
+.header__date {
+  margin: 0;
+}
+
+.header__location {
+  margin: 0;
+}
+
+.header__add-button {
+  margin: 0 20px 0 auto;
+  border: none;
+}
+.header__add-button:hover {
+  cursor: pointer;
+}
+
+.header__user {
+  display: flex;
+  margin: 0;
+  align-items: center;
+  gap: 12px;
+}
+
+.header__username {
+  margin: 0;
+}

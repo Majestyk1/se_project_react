@@ -1,0 +1,101 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease, visibility 0s 0.3s;
+}
+
+.modal_open {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.3s ease, visibility 0s 0s;
+}
+
+.modal__content {
+  background: white;
+  padding: 28px 28px 36px;
+  border-radius: 20px;
+  max-width: 496px;
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+.modal__input {
+  display: block;
+  border: none;
+  border-bottom: 1px solid;
+  width: 100%;
+}
+
+.modal__close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.modal__title {
+  margin: 0;
+  font-size: 16px;
+}
+
+.modal__legend {
+  padding-top: 24px;
+  padding-bottom: 12px;
+}
+
+.modal__label {
+  padding-top: 24px;
+}
+
+.modal__label_type_radio {
+  padding-top: 8px;
+  margin: 0;
+}
+
+.modal__form {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal__radio-btns {
+  display: flex;
+  flex-direction: column;
+  border: none;
+  gap: 5px;
+}
+
+.modal__radio-input {
+  margin-right: 5px;
+}
+
+.modal__submit-btn {
+  background-color: #0000004d;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  max-width: 124px;
+}
+
+.modal__submit-btn:hover {
+  background-color: #0056b3;
+}
+
+.modal_type_createItem {
+  background-color: #0000004d;
+}

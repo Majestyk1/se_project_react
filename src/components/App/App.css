@@ -1,0 +1,30 @@
+@font-face {
+  font-family: "CabinetGrotesk-Medium";
+  font-weight: 500;
+  font-display: swap;
+  font-style: normal;
+  src: url("/fonts/CabinetGrotesk-Medium.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "CabinetGrotesk-Bold";
+  font-weight: 700;
+  font-display: swap;
+  font-style: normal;
+  src: url("/fonts/CabinetGrotesk-Bold.otf") format("opentype");
+}
+
+.app {
+  background-color: #f3f3f3;
+  padding: 0 20px;
+  font-family: "CabinetGrotesk-Medium", sans-serif;
+}
+
+.app__content {
+  min-height: 100vh;
+  max-width: 1440px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
