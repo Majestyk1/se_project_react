@@ -83,7 +83,7 @@
 }
 
 .modal__submit-btn {
-  background-color: #0000004d;
+  background-color: #000000;
   color: white;
   padding: 10px;
   border: none;
@@ -93,7 +93,7 @@
 }
 
 .modal__submit-btn:hover {
-  background-color: #0056b3;
+  background-color: #00000099;
 }
 
 .modal_type_createItem {
