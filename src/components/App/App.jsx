@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import Header from "../Header/Header";
-import Main from "../Main/Main";
-import ModalWithForm from "../ModalWithForm/ModalWithForm.jsx";
+import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 import {
   defaultClothingItems,
   coordinates,
   APIkey,
-} from "../../utils/constants.js";
-import ItemModal from "../ItemModal/ItemModal.jsx";
-import { getWeather, filterWeatherData } from "../../utils/weatherApi.js";
+} from "../../utils/constants";
 import "./App.css";
-import Footer from "../Footer/Footer.jsx";
+import Footer from "../Footer/Footer";
+import Header from "../Header/Header";
+import ItemModal from "../ItemModal/ItemModal";
+import Main from "../Main/Main";
+import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -18,7 +18,6 @@ function App() {
     type: "",
     city: "",
   });
-
   const [isModalOpen, setIsModalOpen] = useState(null);
   const [selectedItem, setSelectedItem] = useState(null);
 
@@ -80,7 +79,7 @@ function App() {
               Image{" "}
               <input
                 id="imageUrl"
-                placeholder="image-URL"
+                placeholder="image URL"
                 type="URL"
                 className="modal__input"
               />

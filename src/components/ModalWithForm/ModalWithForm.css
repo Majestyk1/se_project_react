@@ -41,6 +41,7 @@
   border: none;
   border-bottom: 1px solid;
   width: 100%;
+  padding-top: 8px;
 }
 
 .modal__close-btn {
@@ -64,10 +65,10 @@
 }
 
 .modal__label_type_radio {
-  padding-top: 8px;
   margin: 0;
   color: #00000080;
   flex-direction: row;
+  padding: 0 0 4px;
 }
 
 .modal__label_type_radio:has(input:checked) {
@@ -79,6 +80,8 @@
   flex-direction: column;
   border: none;
   gap: 5px;
+  padding: 0 0 32px;
+  margin: 0;
 }
 
 .modal__radio-input {

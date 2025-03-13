@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import useModalClose from "../../hooks/useModalClose";
 import "./ModalWithForm.css";
 
