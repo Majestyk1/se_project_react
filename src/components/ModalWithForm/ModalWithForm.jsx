@@ -1,7 +1,15 @@
 import useModalClose from "../../hooks/useModalClose";
 import "./ModalWithForm.css";
 
-const ModalWithForm = ({ onClose, isOpen, children, buttonText, title }) => {
+const ModalWithForm = ({
+  onClose,
+  isOpen,
+  children,
+  buttonText,
+  title,
+  name,
+  onSubmit,
+}) => {
   useModalClose(isOpen, onClose);
   return (
     <div className={`modal ${isOpen ? "modal_open" : ""}`}>
@@ -10,7 +18,7 @@ const ModalWithForm = ({ onClose, isOpen, children, buttonText, title }) => {
         <button type="button" className="modal__close-btn" onClick={onClose}>
           &#10005;
         </button>
-        <form name="" className="modal__form">
+        <form onSubmit={onSubmit} name={name} className="modal__form">
           {children}
           <button type="submit" className="modal__submit-btn">
             {buttonText}

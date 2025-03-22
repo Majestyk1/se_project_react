@@ -5,21 +5,33 @@ import {
   coordinates,
   APIkey,
 } from "../../utils/constants";
+import CurrentTempUnitContext from "../../context/CurrentTempUnitContext";
 import "./App.css";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import ItemModal from "../ItemModal/ItemModal";
 import Main from "../Main/Main";
-import ModalWithForm from "../ModalWithForm/ModalWithForm";
+import AddItemModal from "../AddItemModal/AddItemModal";
+import { Route, Routes } from "react-router-dom";
+import Profile from "../Profile/Profile";
+import { getItems } from "../../utils/api";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
-    temp: "",
+    temp: { F: 0, C: 0 },
     type: "",
     city: "",
+    condition: "",
+    isDay: true,
   });
   const [isModalOpen, setIsModalOpen] = useState(null);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [clothingItems, setClothingItems] = useState([]);
+  const [currrentTempUnit, setCurrentTempUnit] = useState("F");
+
+  const handleToggleTempChange = () => {
+    setCurrentTempUnit(currrentTempUnit === "F" ? "C" : "F");
+  };
 
   const openModal = (modalType, item = null) => {
     setSelectedItem(item);
@@ -31,112 +43,82 @@ function App() {
     setSelectedItem(null);
   };
 
-  const [clothingItems, setClothingItems] = useState(defaultClothingItems);
-
   const handleItemClick = (item) => {
     openModal("itemDetails", item);
+  };
+
+  const handleAddItemSubmit = ({ name, imageUrl, weather }) => {
+    setClothingItems((prevItems) => [
+      { name, link: imageUrl, weather },
+      ...prevItems,
+    ]);
+    closeModal();
   };
 
   useEffect(() => {
     getWeather(coordinates, APIkey)
       .then((data) => {
-        const filteredData = filterWeatherData(data);
-        console.log(data);
-        setWeatherData(filteredData);
+        setWeatherData(filterWeatherData(data));
+      })
+      .catch(console.error);
+    getItems()
+      .then((data) => {
+        setClothingItems(data);
       })
       .catch(console.error);
   }, []);
 
+  // useEffect(() => {
+  //   setClothingItems(defaultClothingItems);
+  // }, [currrentTempUnit]);
+
   return (
-    <div className="app">
-      <div className="app__content">
-        <Header
-          openModal={() => openModal("addGarment")}
-          weatherData={weatherData}
-        />
-        <Main
-          weatherData={weatherData}
-          clothingItems={clothingItems}
-          onSelectItem={handleItemClick}
-        />
-        {isModalOpen === "addGarment" && (
-          <ModalWithForm
+    <CurrentTempUnitContext.Provider
+      value={{ currrentTempUnit, handleToggleTempChange }}
+    >
+      <div className="app">
+        <div className="app__content">
+          <Header
+            openModal={() => openModal("addGarment")}
+            weatherData={weatherData}
+          />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Main
+                  weatherData={weatherData}
+                  clothingItems={clothingItems}
+                  onSelectItem={handleItemClick}
+                />
+              }
+            ></Route>
+            <Route
+              path="/profile"
+              element={
+                <Profile
+                  clothingItems={clothingItems}
+                  onSelectItem={handleItemClick}
+                />
+              }
+            ></Route>
+          </Routes>
+          <AddItemModal
             onClose={closeModal}
             isOpen={isModalOpen === "addGarment"}
-            buttonText="Add garment"
-            title="New garment"
-          >
-            <label htmlFor="name" className="modal__label">
-              Name{" "}
-              <input
-                id="name"
-                placeholder="Name"
-                type="text"
-                className="modal__input"
-              />
-            </label>
-            <label htmlFor="imageUrl" className="modal__label">
-              Image{" "}
-              <input
-                id="imageUrl"
-                placeholder="image URL"
-                type="URL"
-                className="modal__input"
-              />
-            </label>
-            <fieldset className="modal__radio-btns">
-              <legend className="modal__legend">
-                Select the weather type:
-              </legend>
-              <label
-                id="hot"
-                htmlFor="hot"
-                className="modal__label modal__label_type_radio"
-              >
-                <input
-                  type="radio"
-                  name="radio"
-                  className="modal__radio-input"
-                />
-                Hot
-              </label>
-              <label
-                id="warm"
-                htmlFor="warm"
-                className="modal__label modal__label_type_radio"
-              >
-                <input
-                  type="radio"
-                  name="radio"
-                  className="modal__radio-input"
-                />
-                Warm
-              </label>
-              <label
-                id="cold"
-                htmlFor="cold"
-                className="modal__label modal__label_type_radio"
-              >
-                <input
-                  type="radio"
-                  name="radio"
-                  className="modal__radio-input"
-                />
-                Cold
-              </label>
-            </fieldset>
-          </ModalWithForm>
-        )}
-        {isModalOpen === "itemDetails" && (
-          <ItemModal
-            isOpen={isModalOpen === "itemDetails"}
-            item={selectedItem}
-            onClose={closeModal}
+            onAddItemSubmit={handleAddItemSubmit}
           />
-        )}
-        <Footer />
+          {isModalOpen === "itemDetails" && (
+            <ItemModal
+              isOpen={isModalOpen === "itemDetails"}
+              item={selectedItem}
+              onClose={closeModal}
+            />
+          )}
+          <Footer />
+        </div>
       </div>
-    </div>
+    </CurrentTempUnitContext.Provider>
   );
 }
 

@@ -24,11 +24,17 @@
 }
 
 .header__add-button {
-  margin: 0 20px 0 auto;
+  margin: 0 20px 0 0;
   border: none;
+  background-color: transparent;
 }
 .header__add-button:hover {
   cursor: pointer;
+}
+
+.header__link {
+  text-decoration: none;
+  color: black;
 }
 
 .header__user {
