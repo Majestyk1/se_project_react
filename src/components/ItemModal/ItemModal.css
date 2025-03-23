@@ -11,6 +11,8 @@
 
 .modal__footer {
   padding-left: 32px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .modal__caption {
@@ -21,4 +23,12 @@
 .modal__weather {
   margin: 0;
   padding-bottom: 32px;
+}
+
+.modal__delete-btn {
+  cursor: pointer;
+  padding: 0;
+  color: #ff4d00;
+  border: none;
+  background-color: transparent;
 }

@@ -14,7 +14,8 @@ import Main from "../Main/Main";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import { Route, Routes } from "react-router-dom";
 import Profile from "../Profile/Profile";
-import { getItems } from "../../utils/api";
+import { getItems, deleteItems, addItems } from "../../utils/api";
+import DeleteConfirmationModal from "../DeleteConfirmationModal/DeleteConfirmationModal";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -27,6 +28,7 @@ function App() {
   const [isModalOpen, setIsModalOpen] = useState(null);
   const [selectedItem, setSelectedItem] = useState(null);
   const [clothingItems, setClothingItems] = useState([]);
+  const [cardToDelete, setCardToDelete] = useState(null);
   const [currrentTempUnit, setCurrentTempUnit] = useState("F");
 
   const handleToggleTempChange = () => {
@@ -34,43 +36,69 @@ function App() {
   };
 
   const openModal = (modalType, item = null) => {
+    console.log("Opening modal:", modalType, "with item:", item);
     setSelectedItem(item);
     setIsModalOpen(modalType);
   };
 
   const closeModal = () => {
-    setIsModalOpen(null);
+    setIsModalOpen(false);
     setSelectedItem(null);
   };
 
-  const handleItemClick = (item) => {
-    openModal("itemDetails", item);
+  const handleItemClick = (data) => {
+    console.log("Item clicked:", data);
+    openModal("itemDetails", data);
+  };
+
+  const openConfirmationModal = (item) => {
+    if (!item) {
+      console.error("No item selected for deletion.");
+      return;
+    }
+    console.log("Opening delete confirmation for item:", item);
+    setCardToDelete(item);
+    setIsModalOpen("delete");
   };
 
   const handleAddItemSubmit = ({ name, imageUrl, weather }) => {
-    setClothingItems((prevItems) => [
-      { name, link: imageUrl, weather },
-      ...prevItems,
-    ]);
-    closeModal();
+    if (!name || !imageUrl || !weather) {
+      console.error("Invalid item data");
+      return;
+    }
+
+    addItems({ name, imageUrl, weather })
+      .then((newItem) => {
+        if (newItem) {
+          setClothingItems((prevItems) => [newItem, ...prevItems]);
+          closeModal();
+        }
+      })
+      .catch(console.error);
   };
-
+  const handleCardDelete = () => {
+    if (!cardToDelete?._id) {
+      console.error("No item ID found");
+      return;
+    }
+    deleteItems(cardToDelete._id).then(() => {
+      setClothingItems((prevItems) =>
+        prevItems.filter((item) => item._id !== cardToDelete._id)
+      );
+      closeModal();
+    });
+  };
   useEffect(() => {
-    getWeather(coordinates, APIkey)
-      .then((data) => {
-        setWeatherData(filterWeatherData(data));
+    Promise.all([
+      getWeather(coordinates, APIkey).then(filterWeatherData),
+      getItems(),
+    ])
+      .then(([weatherData, items]) => {
+        setWeatherData(weatherData);
+        setClothingItems(items);
       })
-      .catch(console.error);
-    getItems()
-      .then((data) => {
-        setClothingItems(data);
-      })
-      .catch(console.error);
+      .catch((err) => console.error(err));
   }, []);
-
-  // useEffect(() => {
-  //   setClothingItems(defaultClothingItems);
-  // }, [currrentTempUnit]);
 
   return (
     <CurrentTempUnitContext.Provider
@@ -82,6 +110,7 @@ function App() {
             openModal={() => openModal("addGarment")}
             weatherData={weatherData}
           />
+
           <Routes>
             <Route
               path="/"
@@ -90,6 +119,7 @@ function App() {
                   weatherData={weatherData}
                   clothingItems={clothingItems}
                   onSelectItem={handleItemClick}
+                  openConfirmationModal={openConfirmationModal}
                 />
               }
             ></Route>
@@ -99,22 +129,40 @@ function App() {
                 <Profile
                   clothingItems={clothingItems}
                   onSelectItem={handleItemClick}
+                  openModal={openModal}
+                  openConfirmationModal={openConfirmationModal}
                 />
               }
             ></Route>
           </Routes>
-          <AddItemModal
-            onClose={closeModal}
-            isOpen={isModalOpen === "addGarment"}
-            onAddItemSubmit={handleAddItemSubmit}
-          />
+
+          {isModalOpen === "delete" && (
+            <DeleteConfirmationModal
+              isOpen={isModalOpen === "delete"}
+              item={cardToDelete}
+              onClose={closeModal}
+              onCardDelete={handleCardDelete}
+            />
+          )}
+
+          {isModalOpen === "addGarment" && (
+            <AddItemModal
+              onClose={closeModal}
+              isOpen={isModalOpen === "addGarment"}
+              onAddItemSubmit={handleAddItemSubmit}
+            />
+          )}
+
           {isModalOpen === "itemDetails" && (
             <ItemModal
               isOpen={isModalOpen === "itemDetails"}
               item={selectedItem}
               onClose={closeModal}
+              onCardDelete={handleCardDelete}
+              openConfirmationModal={openConfirmationModal}
             />
           )}
+
           <Footer />
         </div>
       </div>

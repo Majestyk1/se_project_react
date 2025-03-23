@@ -4,14 +4,22 @@ import ItemCard from "../ItemCard/ItemCard";
 import "./Main.css";
 import CurrentTempUnitContext from "../../context/CurrentTempUnitContext";
 
-const Main = ({ weatherData, clothingItems, onSelectItem }) => {
+const Main = ({
+  weatherData,
+  clothingItems,
+  onSelectItem,
+  handleCardDelete,
+}) => {
   const { currrentTempUnit } = React.useContext(CurrentTempUnitContext);
   const filteredClothing = (
     Array.isArray(clothingItems) ? clothingItems : []
   ).filter((item) => {
     return (
       (item.weather === "cold" && weatherData.temp.F < 50) ||
-      (item.weather === "warm" && weatherData.temp.F >= 50)
+      (item.weather === "warm" &&
+        weatherData.temp.F >= 50 &&
+        weatherData.temp.F < 80) ||
+      (item.weather === "hot" && weatherData.temp.F >= 80)
     );
   });
 
@@ -24,17 +32,14 @@ const Main = ({ weatherData, clothingItems, onSelectItem }) => {
           / you may want to wear:
         </p>
         <ul className="main__items">
-          {clothingItems
-            .filter((item) => {
-              return item.weather === weatherData.type;
-            })
-            .map((filteredItem) => (
-              <ItemCard
-                key={filteredItem._id}
-                item={filteredItem}
-                onCardClick={() => onSelectItem(filteredItem)}
-              />
-            ))}
+          {filteredClothing.map((filteredItem) => (
+            <ItemCard
+              key={filteredItem._id}
+              item={filteredItem}
+              onCardClick={() => onSelectItem(filteredItem)}
+              onCardDelete={() => handleCardDelete(filteredItem._id)}
+            />
+          ))}
         </ul>
       </section>
     </main>
