@@ -11,7 +11,6 @@ function getItems() {
 }
 
 function deleteItems(itemId) {
-  console.log("Deleting item with ID:", itemId);
   return fetch(`${baseUrl}/items/${itemId}`, {
     method: "DELETE",
   })

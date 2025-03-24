@@ -4,7 +4,7 @@ import sunny from "../../assets/sunny.png";
 import CurrentTempUnitContext from "../../context/CurrentTempUnitContext";
 
 const WeatherCard = ({ weatherData }) => {
-  const { currrentTempUnit } = React.useContext(CurrentTempUnitContext);
+  const { currentTempUnit } = React.useContext(CurrentTempUnitContext);
   // const filteredOptions = weatherOption.filter((option) => {
   //   return (
   //     option.day === weatherData.isDay &&
@@ -20,7 +20,7 @@ const WeatherCard = ({ weatherData }) => {
   // }
   return (
     <section className="weather__card">
-      {currrentTempUnit === "F" ? (
+      {currentTempUnit === "F" ? (
         <p className="weather__temp">{weatherData.temp.F} °F</p>
       ) : (
         <p className="weather__temp">{weatherData.temp.C} °C</p>

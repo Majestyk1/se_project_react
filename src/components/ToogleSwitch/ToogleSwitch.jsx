@@ -2,15 +2,17 @@ import "./ToogleSwitch.css";
 import { useContext, useEffect } from "react";
 import CurrentTempUnitContext from "../../context/CurrentTempUnitContext";
 
-function ToogleSwitch(props) {
-  const { handleToggleTempChange } = useContext(CurrentTempUnitContext);
+function ToggleSwitch() {
+  const { currentTempUnit, handleToggleTempChange } = useContext(
+    CurrentTempUnitContext
+  );
 
   return (
     <label className="switch">
       <input
         className="switch__input"
         type="checkbox"
-        checked={props.isChecked}
+        checked={currentTempUnit === "C"}
         onChange={handleToggleTempChange}
       />
       <span className="switch__slider"></span>
@@ -20,4 +22,4 @@ function ToogleSwitch(props) {
   );
 }
 
-export default ToogleSwitch;
+export default ToggleSwitch;

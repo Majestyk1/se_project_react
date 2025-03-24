@@ -3,12 +3,25 @@ import useModalClose from "../../hooks/useModalClose";
 import "./DeleteConfirmationModal.css";
 
 const DeleteConfirmationModal = ({ isOpen, item, onClose, onCardDelete }) => {
-  useModalClose();
+  const styles = {
+    closeButton: {
+      color: "grey",
+      border: "none",
+      cursor: "pointer",
+    },
+  };
+
+  useModalClose(isOpen, onClose);
 
   return (
     <div className={`modal ${isOpen ? "modal_open" : ""}`}>
       <div className="modal__content_type_delete">
-        <button type="button" className="modal__close-btn" onClick={onClose}>
+        <button
+          style={styles.closeButton}
+          type="button"
+          className="modal__close-btn"
+          onClick={onClose}
+        >
           &#10005;
         </button>
 

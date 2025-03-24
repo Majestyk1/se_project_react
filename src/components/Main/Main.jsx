@@ -10,7 +10,7 @@ const Main = ({
   onSelectItem,
   handleCardDelete,
 }) => {
-  const { currrentTempUnit } = React.useContext(CurrentTempUnitContext);
+  const { currentTempUnit } = React.useContext(CurrentTempUnitContext);
   const filteredClothing = (
     Array.isArray(clothingItems) ? clothingItems : []
   ).filter((item) => {
@@ -28,8 +28,8 @@ const Main = ({
       <WeatherCard weatherData={weatherData} />
       <section className="main-clothes">
         <p className="main__weather-info">
-          Today is {weatherData.temp[currrentTempUnit]} &deg; {currrentTempUnit}
-          / you may want to wear:
+          Today is {weatherData.temp[currentTempUnit]} &deg; {currentTempUnit}/
+          you may want to wear:
         </p>
         <ul className="main__items">
           {filteredClothing.map((filteredItem) => (

@@ -1,7 +1,7 @@
 import "./Header.css";
 import logo from "../../assets/logo.svg";
 import avatar from "../../assets/Avatar.svg";
-import ToogleSwitch from "../ToogleSwitch/ToogleSwitch";
+import ToggleSwitch from "../ToogleSwitch/ToogleSwitch";
 import { Link } from "react-router-dom";
 
 const Header = ({ weatherData, openModal }) => {
@@ -19,7 +19,7 @@ const Header = ({ weatherData, openModal }) => {
         <p className="header__date">{currentDate}</p>
         <p className="header__location">, {weatherData.city}</p>
       </div>
-      <ToogleSwitch />
+      <ToggleSwitch />
       <button className="header__add-button" type="button" onClick={openModal}>
         + Add Clothes
       </button>

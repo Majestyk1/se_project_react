@@ -4,11 +4,11 @@ import ItemCard from "../ItemCard/ItemCard";
 
 function ClothesSection({
   clothingItems,
-  openConfirmationModal,
+  onSelectItem,
   openModal,
-  handleCardDelete: onCardDelete,
+  onCardDelete,
 }) {
-  if (!clothingItems) {
+  if (!clothingItems || clothingItems.length === 0) {
     return <div className="clothes-section">No items found</div>;
   }
   return (
@@ -27,9 +27,8 @@ function ClothesSection({
           <ItemCard
             key={filteredItem._id}
             item={filteredItem}
-            onCardClick={() => openConfirmationModal(filteredItem)}
+            onCardClick={() => onSelectItem(filteredItem)}
             onCardDelete={() => {
-              console.log("Attempting to delete item:", filteredItem);
               onCardDelete(filteredItem._id);
             }}
           />

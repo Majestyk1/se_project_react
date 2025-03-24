@@ -29,14 +29,17 @@ function App() {
   const [selectedItem, setSelectedItem] = useState(null);
   const [clothingItems, setClothingItems] = useState([]);
   const [cardToDelete, setCardToDelete] = useState(null);
-  const [currrentTempUnit, setCurrentTempUnit] = useState("F");
+  const [currentTempUnit, setCurrentTempUnit] = useState(
+    () => localStorage.getItem("temperatureUnit") || "F"
+  );
 
   const handleToggleTempChange = () => {
-    setCurrentTempUnit(currrentTempUnit === "F" ? "C" : "F");
+    const newUnit = currentTempUnit === "F" ? "C" : "F";
+    setCurrentTempUnit(newUnit);
+    localStorage.setItem("temperatureUnit", newUnit);
   };
 
   const openModal = (modalType, item = null) => {
-    console.log("Opening modal:", modalType, "with item:", item);
     setSelectedItem(item);
     setIsModalOpen(modalType);
   };
@@ -47,7 +50,6 @@ function App() {
   };
 
   const handleItemClick = (data) => {
-    console.log("Item clicked:", data);
     openModal("itemDetails", data);
   };
 
@@ -56,7 +58,6 @@ function App() {
       console.error("No item selected for deletion.");
       return;
     }
-    console.log("Opening delete confirmation for item:", item);
     setCardToDelete(item);
     setIsModalOpen("delete");
   };
@@ -102,7 +103,7 @@ function App() {
 
   return (
     <CurrentTempUnitContext.Provider
-      value={{ currrentTempUnit, handleToggleTempChange }}
+      value={{ currentTempUnit, handleToggleTempChange }}
     >
       <div className="app">
         <div className="app__content">
