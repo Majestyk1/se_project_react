@@ -1,12 +1,6 @@
 {
   "items": [
     {
-      "_id": 10,
-      "name": "Scarf",
-      "weather": "cold",
-      "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Scarf.png?etag=74efbee93810c926b5507e862c6cb76c"
-    },
-    {
       "_id": 11,
       "name": "Shorts",
       "weather": "Hot",
@@ -80,9 +74,15 @@
     },
     {
       "name": "YOLO",
-      "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Sneakers.png?etag=3efeec41c1c78b8afe26859ca7fa7b6f",
+      "imageUrl": "https://i.snipboard.io/lmtUxc.jpg",
       "weather": "hot",
-      "_id": 34
+      "_id": 35
+    },
+    {
+      "name": "YOLO",
+      "imageUrl": "https://i.snipboard.io/lmtUxc.jpg",
+      "weather": "hot",
+      "_id": 36
     }
   ]
 }
