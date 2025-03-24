@@ -1,12 +1,12 @@
 const baseUrl = "http://localhost:3001";
 
+const handleServerResponse = (res) => {
+  return res.ok ? res.json() : Promise.reject(`Failed to fetch: ${res.status}`);
+};
+
 function getItems() {
   return fetch(`${baseUrl}/items`)
-    .then((res) => {
-      return res.ok
-        ? res.json()
-        : Promise.reject("Something went wrong: ${res.status}");
-    })
+    .then(handleServerResponse)
     .catch(console.error);
 }
 
@@ -14,11 +14,7 @@ function deleteItems(itemId) {
   return fetch(`${baseUrl}/items/${itemId}`, {
     method: "DELETE",
   })
-    .then((res) =>
-      res.ok
-        ? res.json()
-        : Promise.reject(`Failed to delete item: ${res.status}`)
-    )
+    .then(handleServerResponse)
     .catch(console.error);
 }
 
@@ -34,9 +30,7 @@ function addItems(item) {
     },
     body: JSON.stringify(item),
   })
-    .then((res) =>
-      res.ok ? res.json() : Promise.reject(`Failed to add item: ${res.status}`)
-    )
+    .then(handleServerResponse)
     .catch(console.error);
 }
 
