@@ -5,19 +5,6 @@ import CurrentTempUnitContext from "../../context/CurrentTempUnitContext";
 
 const WeatherCard = ({ weatherData }) => {
   const { currentTempUnit } = React.useContext(CurrentTempUnitContext);
-  // const filteredOptions = weatherOption.filter((option) => {
-  //   return (
-  //     option.day === weatherData.isDay &&
-  //     option.condition === weatherData.condition
-  //   );
-  // });
-
-  // let weatherOption;
-  // if (filteredOptions.length === 0) {
-  //   weatherOption = defaultWeatherOption;
-  // } else {
-  //   weatherOption = filteredOptions[0];
-  // }
   return (
     <section className="weather__card">
       {currentTempUnit === "F" ? (

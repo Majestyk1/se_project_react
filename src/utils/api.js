@@ -5,17 +5,13 @@ const handleServerResponse = (res) => {
 };
 
 function getItems() {
-  return fetch(`${baseUrl}/items`)
-    .then(handleServerResponse)
-    .catch(console.error);
+  return fetch(`${baseUrl}/items`).then(handleServerResponse);
 }
 
 function deleteItems(itemId) {
   return fetch(`${baseUrl}/items/${itemId}`, {
     method: "DELETE",
-  })
-    .then(handleServerResponse)
-    .catch(console.error);
+  }).then(handleServerResponse);
 }
 
 function addItems(item) {
@@ -29,9 +25,7 @@ function addItems(item) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(item),
-  })
-    .then(handleServerResponse)
-    .catch(console.error);
+  }).then(handleServerResponse);
 }
 
-export { getItems, deleteItems, addItems };
+export { getItems, deleteItems, addItems, handleServerResponse };

@@ -77,17 +77,20 @@ function App() {
       })
       .catch(console.error);
   };
+
   const handleCardDelete = () => {
     if (!cardToDelete?._id) {
       console.error("No item ID found");
       return;
     }
-    deleteItems(cardToDelete._id).then(() => {
-      setClothingItems((prevItems) =>
-        prevItems.filter((item) => item._id !== cardToDelete._id)
-      );
-      closeModal();
-    });
+    deleteItems(cardToDelete._id)
+      .then(() => {
+        setClothingItems((prevItems) =>
+          prevItems.filter((item) => item._id !== cardToDelete._id)
+        );
+        closeModal();
+      })
+      .catch(console.error);
   };
   useEffect(() => {
     Promise.all([

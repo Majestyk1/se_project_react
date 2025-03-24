@@ -1,11 +1,11 @@
 import "./AddItemModal.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
-import React from "react";
+import { React, useEffect, useState } from "react";
 
 function AddItemModal({ isOpen, onClose, onAddItemSubmit }) {
-  const [name, setName] = React.useState("");
-  const [imageUrl, setImageUrl] = React.useState("");
-  const [weather, setWeather] = React.useState("");
+  const [name, setName] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const [weather, setWeather] = useState("");
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -22,16 +22,19 @@ function AddItemModal({ isOpen, onClose, onAddItemSubmit }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     onAddItemSubmit({ name, imageUrl, weather });
+  };
+
+  useEffect(() => {
     setName("");
     setImageUrl("");
     setWeather("");
-  };
+  }, [isOpen]);
 
   return (
     <ModalWithForm
       onClose={onClose}
       isOpen={isOpen}
-      buttonText="Add garment"
+      buttonText={"Add garment"}
       title="New garment"
       onSubmit={handleSubmit}
     >

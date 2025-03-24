@@ -7,6 +7,12 @@
 
 .modal__image {
   border-radius: 16px 16px 0 0;
+  max-width: 498px;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+  max-height: 498px;
+  height: 100%;
 }
 
 .modal__footer {
