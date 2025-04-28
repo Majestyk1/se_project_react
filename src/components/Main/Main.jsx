@@ -22,7 +22,6 @@ const Main = ({
       (item.weather === "hot" && weatherData.temp.F >= 86)
     );
   });
-
   return (
     <main className="main">
       <WeatherCard weatherData={weatherData} />

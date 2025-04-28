@@ -1,8 +1,17 @@
-.sidebar {
+.sidebar__profile-container {
   display: flex;
   gap: 16px;
 }
 
 .sidebar__username {
   min-width: 126px;
+}
+
+.sidebar__avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+}
+.sidebar__avatar:hover {
+  cursor: pointer;
 }

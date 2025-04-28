@@ -1,18 +1,22 @@
+import {
+  CurrentUserProvider,
+  CurrentUserContext,
+} from "../../context/CurrentUserContext";
+import { useContext } from "react";
 import React, { useEffect, useState } from "react";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
-import {
-  defaultClothingItems,
-  coordinates,
-  APIkey,
-} from "../../utils/constants";
+import { coordinates, APIkey } from "../../utils/constants";
+import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute";
 import CurrentTempUnitContext from "../../context/CurrentTempUnitContext";
 import "./App.css";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import ItemModal from "../ItemModal/ItemModal";
+import LoginModal from "../LoginModal/LoginModal";
+import RegisterModal from "../RegisterModal/RegisterModal";
 import Main from "../Main/Main";
 import AddItemModal from "../AddItemModal/AddItemModal";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Profile from "../Profile/Profile";
 import { getItems, deleteItems, addItems } from "../../utils/api";
 import DeleteConfirmationModal from "../DeleteConfirmationModal/DeleteConfirmationModal";
@@ -32,6 +36,9 @@ function App() {
   const [currentTempUnit, setCurrentTempUnit] = useState(
     () => localStorage.getItem("temperatureUnit") || "F"
   );
+
+  const userContext = useContext(CurrentUserContext);
+  const navigate = useNavigate();
 
   const handleToggleTempChange = () => {
     const newUnit = currentTempUnit === "F" ? "C" : "F";
@@ -67,8 +74,8 @@ function App() {
       console.error("Invalid item data");
       return;
     }
-
-    addItems({ name, imageUrl, weather })
+    const token = localStorage.getItem("jwt");
+    addItems({ name, imageUrl, weather }, token)
       .then((newItem) => {
         if (newItem) {
           setClothingItems((prevItems) => [newItem, ...prevItems]);
@@ -78,12 +85,33 @@ function App() {
       .catch(console.error);
   };
 
+  const handleLoginSubmit = async (email, password) => {
+    try {
+      await userContext.handleLogin(email, password);
+      closeModal();
+      navigate("/profile");
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
+  };
+
+  const handleSignupSubmit = async (userData) => {
+    try {
+      await userContext.handleSignup(userData);
+      closeModal();
+      navigate("/profile");
+    } catch (error) {
+      console.error("Signup failed:", error);
+    }
+  };
+
   const handleCardDelete = () => {
     if (!cardToDelete?._id) {
       console.error("No item ID found");
       return;
     }
-    deleteItems(cardToDelete._id)
+    const token = localStorage.getItem("jwt");
+    deleteItems(cardToDelete._id, token)
       .then(() => {
         setClothingItems((prevItems) =>
           prevItems.filter((item) => item._id !== cardToDelete._id)
@@ -92,6 +120,7 @@ function App() {
       })
       .catch(console.error);
   };
+
   useEffect(() => {
     Promise.all([
       getWeather(coordinates, APIkey).then(filterWeatherData),
@@ -111,10 +140,10 @@ function App() {
       <div className="app">
         <div className="app__content">
           <Header
-            openModal={() => openModal("addGarment")}
+            openModal={openModal}
             weatherData={weatherData}
+            handleLogout={userContext.handleLogout}
           />
-
           <Routes>
             <Route
               path="/"
@@ -130,12 +159,14 @@ function App() {
             <Route
               path="/profile"
               element={
-                <Profile
-                  clothingItems={clothingItems}
-                  onSelectItem={handleItemClick}
-                  openModal={openModal}
-                  openConfirmationModal={openConfirmationModal}
-                />
+                <ProtectedRoute>
+                  <Profile
+                    clothingItems={clothingItems}
+                    onSelectItem={handleItemClick}
+                    openModal={openModal}
+                    openConfirmationModal={openConfirmationModal}
+                  />
+                </ProtectedRoute>
               }
             ></Route>
           </Routes>
@@ -167,6 +198,21 @@ function App() {
             />
           )}
 
+          {isModalOpen === "login" && (
+            <LoginModal
+              isOpen={isModalOpen === "login"}
+              onClose={closeModal}
+              onSubmit={handleLoginSubmit}
+            />
+          )}
+
+          {isModalOpen === "signup" && (
+            <RegisterModal
+              isOpen={isModalOpen === "signup"}
+              onClose={closeModal}
+              onSubmit={handleSignupSubmit}
+            />
+          )}
           <Footer />
         </div>
       </div>
@@ -174,4 +220,12 @@ function App() {
   );
 }
 
-export default App;
+function AppWrapper() {
+  return (
+    <CurrentUserProvider>
+      <App />
+    </CurrentUserProvider>
+  );
+}
+
+export default AppWrapper;
