@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { checkToken, signin, signup } from "../utils/auth"; // We'll use this to verify the token
+import { checkToken, signin, signup, updateProfile } from "../utils/auth"; // We'll use this to verify the token
 
 export const CurrentUserContext = React.createContext();
 
@@ -24,12 +24,18 @@ export const CurrentUserProvider = ({ children }) => {
   }, []);
 
   // These methods will be available throughout your app via context
+
   const handleLogin = (email, password) => {
-    return signin({ email, password }) // Pass as an object
+    return signin({ email, password })
       .then((data) => {
         localStorage.setItem("jwt", data.token);
-        setCurrentUser(data.user);
-        return data;
+        // After saving token, check it to get user data
+        return checkToken(data.token); // This should return user data
+      })
+      .then((userData) => {
+        console.log("User data received:", userData); // Let's add this log to debug
+        setCurrentUser(userData);
+        return userData;
       })
       .catch((err) => {
         console.log(err);
@@ -43,11 +49,15 @@ export const CurrentUserProvider = ({ children }) => {
         return signin({
           email: userData.email,
           password: userData.password,
-        }).then((signinData) => {
-          localStorage.setItem("jwt", signinData.token);
-          setCurrentUser(signinData.user);
-          return data;
-        });
+        })
+          .then((signinData) => {
+            localStorage.setItem("jwt", signinData.token);
+            return checkToken(signinData.token);
+          })
+          .then((userData) => {
+            setCurrentUser(userData);
+            return userData;
+          });
       })
       .catch((err) => {
         console.log("Context: Signup error:", err);
@@ -60,6 +70,19 @@ export const CurrentUserProvider = ({ children }) => {
     setCurrentUser(null);
   };
 
+  const handleProfileUpdate = (name, avatar) => {
+    const jwt = localStorage.getItem("jwt");
+    return updateProfile(name, avatar, jwt)
+      .then((data) => {
+        setCurrentUser(data);
+        return data;
+      })
+      .catch((err) => {
+        console.log("Context: Profile update error:", err);
+        throw err;
+      });
+  };
+
   return (
     <CurrentUserContext.Provider
       value={{
@@ -68,6 +91,7 @@ export const CurrentUserProvider = ({ children }) => {
         handleLogin,
         handleLogout,
         handleSignup,
+        handleProfileUpdate,
       }}
     >
       {children}

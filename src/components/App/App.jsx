@@ -14,6 +14,8 @@ import Header from "../Header/Header";
 import ItemModal from "../ItemModal/ItemModal";
 import LoginModal from "../LoginModal/LoginModal";
 import RegisterModal from "../RegisterModal/RegisterModal";
+import EditProfileModal from "../EditProfileModal/EditProfileModal";
+import { addCardLike, removeCardLike } from "../../utils/auth";
 import Main from "../Main/Main";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import { Route, Routes, useNavigate } from "react-router-dom";
@@ -69,6 +71,25 @@ function App() {
     setIsModalOpen("delete");
   };
 
+  const handleCardLike = ({ _id, isLiked }) => {
+    const token = localStorage.getItem("jwt");
+
+    if (!token) {
+      console.error("No token found");
+      return;
+    }
+
+    (!isLiked ? addCardLike(_id, token) : removeCardLike(_id, token))
+      .then((updatedCard) => {
+        setClothingItems((cards) =>
+          cards.map((item) => (item._id === _id ? updatedCard : item))
+        );
+      })
+      .catch((err) => {
+        console.log("Error handling card like:", err);
+      });
+  };
+
   const handleAddItemSubmit = ({ name, imageUrl, weather }) => {
     if (!name || !imageUrl || !weather) {
       console.error("Invalid item data");
@@ -78,7 +99,13 @@ function App() {
     addItems({ name, imageUrl, weather }, token)
       .then((newItem) => {
         if (newItem) {
-          setClothingItems((prevItems) => [newItem, ...prevItems]);
+          const formattedNewItem = {
+            ...newItem,
+            isLiked: false,
+            _id: newItem._id,
+            owner: newItem.owner,
+          };
+          setClothingItems((prevItems) => [formattedNewItem, ...prevItems]);
           closeModal();
         }
       })
@@ -102,6 +129,15 @@ function App() {
       navigate("/profile");
     } catch (error) {
       console.error("Signup failed:", error);
+    }
+  };
+  const handleEditProfileSubmit = async (name, avatar) => {
+    try {
+      await userContext.handleProfileUpdate(name, avatar);
+      closeModal();
+      navigate("/profile");
+    } catch (error) {
+      console.error("Profile update failed:", error);
     }
   };
 
@@ -132,7 +168,6 @@ function App() {
       })
       .catch((err) => console.error(err));
   }, []);
-
   return (
     <CurrentTempUnitContext.Provider
       value={{ currentTempUnit, handleToggleTempChange }}
@@ -153,6 +188,7 @@ function App() {
                   clothingItems={clothingItems}
                   onSelectItem={handleItemClick}
                   openConfirmationModal={openConfirmationModal}
+                  onCardLike={handleCardLike}
                 />
               }
             ></Route>
@@ -165,6 +201,7 @@ function App() {
                     onSelectItem={handleItemClick}
                     openModal={openModal}
                     openConfirmationModal={openConfirmationModal}
+                    onCardLike={handleCardLike}
                   />
                 </ProtectedRoute>
               }
@@ -211,6 +248,13 @@ function App() {
               isOpen={isModalOpen === "signup"}
               onClose={closeModal}
               onSubmit={handleSignupSubmit}
+            />
+          )}
+          {isModalOpen === "editProfile" && (
+            <EditProfileModal
+              isOpen={isModalOpen === "editProfile"}
+              onClose={closeModal}
+              onSubmit={handleEditProfileSubmit}
             />
           )}
           <Footer />

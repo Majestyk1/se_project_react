@@ -8,7 +8,8 @@ const Main = ({
   weatherData,
   clothingItems,
   onSelectItem,
-  handleCardDelete,
+  openConfirmationModal,
+  onCardLike,
 }) => {
   const { currentTempUnit } = React.useContext(CurrentTempUnitContext);
   const filteredClothing = (
@@ -36,7 +37,8 @@ const Main = ({
               key={filteredItem._id}
               item={filteredItem}
               onCardClick={() => onSelectItem(filteredItem)}
-              onCardDelete={() => handleCardDelete(filteredItem._id)}
+              onCardDelete={() => openConfirmationModal(filteredItem._id)}
+              onCardLike={onCardLike}
             />
           ))}
         </ul>

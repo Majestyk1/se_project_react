@@ -1,3 +1,5 @@
+import React, { useContext } from "react";
+import { CurrentUserContext } from "../../context/CurrentUserContext";
 import "./ItemModal.css";
 import useModalClose from "../../hooks/useModalClose";
 
@@ -17,6 +19,9 @@ function ItemModal({
   openConfirmationModal,
 }) {
   useModalClose(isOpen, onClose);
+
+  const { currentUser } = useContext(CurrentUserContext);
+  const isOwner = currentUser ? item && item.owner === currentUser._id : false;
   return (
     <div className={`modal ${isOpen ? "modal_open" : ""}`}>
       <div className="modal__content_type_image">
@@ -37,16 +42,18 @@ function ItemModal({
                 <h2 className="modal__caption">{item.name}</h2>
                 <p className="modal__weather">Weather: {item.weather}</p>
               </div>
-              <button
-                onClick={() => {
-                  onClose();
-                  openConfirmationModal(item);
-                }}
-                className="modal__delete-btn"
-                type="button"
-              >
-                Delete item
-              </button>
+              {isOwner && (
+                <button
+                  onClick={() => {
+                    onClose();
+                    openConfirmationModal(item);
+                  }}
+                  className="modal__delete-btn"
+                  type="button"
+                >
+                  Delete item
+                </button>
+              )}
             </div>
           </div>
         )}

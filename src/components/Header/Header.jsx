@@ -13,7 +13,6 @@ const Header = ({ weatherData, openModal, currentUser }) => {
   });
 
   const userContext = useContext(CurrentUserContext);
-  console.log("UserContext data:", userContext.currentUser);
   return (
     <header className="header">
       <Link to="/">
@@ -32,14 +31,7 @@ const Header = ({ weatherData, openModal, currentUser }) => {
         + Add Clothes
       </button>
       {!userContext.currentUser ? (
-        <>
-          <button
-            className="header__login-button"
-            type="button"
-            onClick={() => openModal("login")}
-          >
-            Log in
-          </button>
+        <div className="header__login-container">
           <button
             className="header__signup-button"
             type="button"
@@ -47,7 +39,14 @@ const Header = ({ weatherData, openModal, currentUser }) => {
           >
             Sign up
           </button>
-        </>
+          <button
+            className="header__login-button"
+            type="button"
+            onClick={() => openModal("login")}
+          >
+            Log in
+          </button>
+        </div>
       ) : (
         <Link to="/profile" className="header__link">
           <div className="header__user">

@@ -21,7 +21,6 @@ function addItems(item, token) {
   if (!item.name || !item.imageUrl || !item.weather) {
     return Promise.reject("Invalid item data");
   }
-  console.log("Token being sent:", token);
   return fetch(`${baseUrl}/items`, {
     method: "POST",
     headers: {
@@ -32,4 +31,15 @@ function addItems(item, token) {
   }).then(handleServerResponse);
 }
 
-export { getItems, deleteItems, addItems, handleServerResponse };
+function updateProfile(name, avatar, token) {
+  return fetch(`${baseUrl}/users/me`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ name, avatar }),
+  }).then(handleServerResponse);
+}
+
+export { getItems, deleteItems, addItems, updateProfile, handleServerResponse };

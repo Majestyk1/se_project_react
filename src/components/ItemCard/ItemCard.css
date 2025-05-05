@@ -30,3 +30,34 @@
   background-color: #f3f3f3;
   font-size: 16px;
 }
+
+.item__like-button {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 20px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.item__like-button_active .item__like-button-content {
+  content: "❤️";
+}
+
+/* Show red heart on hover when not active */
+.item__like-button:not(.item__like-button_active):hover
+  .item__like-button-content::before {
+  content: "❤️";
+  position: absolute;
+  left: 0;
+}
+
+/* Show white heart on hover when active */
+.item__like-button_active:hover .item__like-button-content::before {
+  content: "🤍";
+  position: absolute;
+  left: 0;
+}

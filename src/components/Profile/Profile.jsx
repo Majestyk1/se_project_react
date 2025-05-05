@@ -7,11 +7,12 @@ function Profile({
   onSelectItem,
   openModal,
   openConfirmationModal,
+  onCardLike,
 }) {
   return (
     <div className="profile">
       <section className="profile__sidebar">
-        <SideBar />
+        <SideBar openModal={openModal} />
       </section>
       <section className="profile__clothing-items">
         <ClothesSection
@@ -19,6 +20,7 @@ function Profile({
           onSelectItem={onSelectItem}
           openModal={openModal}
           openConfirmationModal={openConfirmationModal}
+          onCardLike={onCardLike}
         />
       </section>
     </div>
