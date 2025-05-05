@@ -104,9 +104,8 @@ VITE_API_URL=http://localhost:3001
 
 ## ⚙️ Backend repo
 
-
 The backend API for this project can be found here:  
-[WTWR Backend Repository](https://github.com/yourusername/se_project_express)
+[WTWR Backend Repository](https://github.com/majestyk1/se_project_express)
 
 ## 📝 License
 
