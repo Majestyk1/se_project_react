@@ -104,7 +104,9 @@ VITE_API_URL=http://localhost:3001
 
 ## ⚙️ Backend repo
 
--https://github.com/Majestyk1/se_project_express.git
+```
+https://github.com/Majestyk1/se_project_express.git
+```
 
 ## 📝 License
 
