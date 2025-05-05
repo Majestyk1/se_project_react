@@ -25,6 +25,16 @@ export const CurrentUserProvider = ({ children }) => {
 
   // These methods will be available throughout your app via context
 
+  const handleLoginToSignUp = () => {
+    closeModal();
+    openModal("login");
+  };
+
+  const handleSignUpToLogin = () => {
+    closeModal();
+    openModal("signup");
+  };
+
   const handleLogin = (email, password) => {
     return signin({ email, password })
       .then((data) => {
@@ -92,6 +102,8 @@ export const CurrentUserProvider = ({ children }) => {
         handleLogout,
         handleSignup,
         handleProfileUpdate,
+        handleLoginToSignUp,
+        handleSignUpToLogin,
       }}
     >
       {children}

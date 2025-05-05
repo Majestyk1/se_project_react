@@ -23,13 +23,6 @@ const Header = ({ weatherData, openModal, currentUser }) => {
         <p className="header__location">, {weatherData.city}</p>
       </div>
       <ToggleSwitch />
-      <button
-        className="header__add-button"
-        type="button"
-        onClick={() => openModal("addGarment")}
-      >
-        + Add Clothes
-      </button>
       {!userContext.currentUser ? (
         <div className="header__login-container">
           <button
@@ -48,16 +41,25 @@ const Header = ({ weatherData, openModal, currentUser }) => {
           </button>
         </div>
       ) : (
-        <Link to="/profile" className="header__link">
-          <div className="header__user">
-            <p className="header__username">{userContext.currentUser.name}</p>
-            <img
-              src={userContext.currentUser.avatar}
-              alt={userContext.currentUser.name || "User avatar"}
-              className="header__avatar"
-            />
-          </div>
-        </Link>
+        <>
+          <button
+            className="header__add-button"
+            type="button"
+            onClick={() => openModal("addGarment")}
+          >
+            + Add Clothes
+          </button>
+          <Link to="/profile" className="header__link">
+            <div className="header__user">
+              <p className="header__username">{userContext.currentUser.name}</p>
+              <img
+                src={userContext.currentUser.avatar}
+                alt={userContext.currentUser.name || "User avatar"}
+                className="header__avatar"
+              />
+            </div>
+          </Link>
+        </>
       )}
     </header>
   );

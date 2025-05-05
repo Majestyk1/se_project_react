@@ -18,20 +18,22 @@ const ItemCard = ({ item, onCardClick, onCardLike }) => {
         onCardClick(item);
       }}
     >
-      <h2 className="item__card-name">{item.name}</h2>
       <img src={item.imageUrl} alt={item.name} className="item__card-image" />
-      {currentUser && (
-        <button
-          className={`item__like-button ${
-            isLiked ? "item__like-button_active" : ""
-          }`}
-          onClick={handleLikeClick}
-        >
-          <span className="item__like-button-content">
-            {isLiked ? "❤️" : "🤍"}
-          </span>
-        </button>
-      )}
+      <div className="item__card-container">
+        <h2 className="item__card-name">{item.name}</h2>
+        {currentUser && (
+          <button
+            className={`item__like-button ${
+              isLiked ? "item__like-button_active" : ""
+            }`}
+            onClick={handleLikeClick}
+          >
+            <span className="item__like-button-content">
+              {isLiked ? "❤️" : "🤍"}
+            </span>
+          </button>
+        )}
+      </div>
     </li>
   );
 };

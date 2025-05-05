@@ -2,11 +2,12 @@ import "./RegisterModal.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { React, useState, useEffect } from "react";
 
-function RegisterModal({ isOpen, onClose, onSubmit }) {
+function RegisterModal({ isOpen, onClose, onSubmit, onLoginClick }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [avatar, setAvatar] = useState("");
+  const [isFormValid, setIsFormValid] = useState(false);
 
   // Add your handle change functions here for each input
 
@@ -31,6 +32,20 @@ function RegisterModal({ isOpen, onClose, onSubmit }) {
     setPassword(e.target.value);
   };
 
+  const validateForm = () => {
+    const isEmailValid = email.length >= 2 && email.includes("@");
+    const isPasswordValid = password.length >= 2 && password.length <= 30;
+    const isNameValid = name.length >= 2 && name.length <= 30;
+    const isAvatarValid = avatar.length > 0;
+    setIsFormValid(
+      isEmailValid && isPasswordValid && isNameValid && isAvatarValid
+    );
+  };
+
+  useEffect(() => {
+    validateForm();
+  }, [email, password, name, avatar]);
+
   useEffect(() => {
     // Reset form when modal opens/closes
     setName("");
@@ -43,7 +58,6 @@ function RegisterModal({ isOpen, onClose, onSubmit }) {
     <ModalWithForm
       onClose={onClose}
       isOpen={isOpen}
-      buttonText="Register"
       title="Sign up"
       onSubmit={handleSubmit}
     >
@@ -104,6 +118,22 @@ function RegisterModal({ isOpen, onClose, onSubmit }) {
           value={avatar}
         />
       </label>
+      <div className="modal__button-container">
+        <button
+          type="submit"
+          className="modal__submit-btn"
+          disabled={!isFormValid}
+        >
+          Sign up
+        </button>
+        <button
+          type="button"
+          className="modal__login-btn"
+          onClick={onLoginClick}
+        >
+          or Login
+        </button>
+      </div>
     </ModalWithForm>
   );
 }

@@ -6,6 +6,7 @@ function AddItemModal({ isOpen, onClose, onAddItemSubmit }) {
   const [name, setName] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [weather, setWeather] = useState("");
+  const [isFormValid, setIsFormValid] = useState(false);
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -24,6 +25,17 @@ function AddItemModal({ isOpen, onClose, onAddItemSubmit }) {
     onAddItemSubmit({ name, imageUrl, weather });
   };
 
+  const validateForm = () => {
+    const isNameValid = name.length >= 2 && name.length <= 30;
+    const isImageUrlValid = imageUrl.length > 0;
+    const isWeatherValid = weather !== "";
+    setIsFormValid(isNameValid && isImageUrlValid && isWeatherValid);
+  };
+
+  useEffect(() => {
+    validateForm();
+  }, [name, imageUrl, weather]);
+
   useEffect(() => {
     setName("");
     setImageUrl("");
@@ -34,7 +46,6 @@ function AddItemModal({ isOpen, onClose, onAddItemSubmit }) {
     <ModalWithForm
       onClose={onClose}
       isOpen={isOpen}
-      buttonText={"Add garment"}
       title="New garment"
       onSubmit={handleSubmit}
     >
@@ -113,6 +124,13 @@ function AddItemModal({ isOpen, onClose, onAddItemSubmit }) {
           Cold
         </label>
       </fieldset>
+      <button
+        type="submit"
+        className="modal__submit-btn"
+        disabled={!isFormValid}
+      >
+        Add garment
+      </button>
     </ModalWithForm>
   );
 }

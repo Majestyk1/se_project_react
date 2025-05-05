@@ -35,6 +35,7 @@ function App() {
   const [selectedItem, setSelectedItem] = useState(null);
   const [clothingItems, setClothingItems] = useState([]);
   const [cardToDelete, setCardToDelete] = useState(null);
+  const [hasLoginError, setHasLoginError] = useState(false);
   const [currentTempUnit, setCurrentTempUnit] = useState(
     () => localStorage.getItem("temperatureUnit") || "F"
   );
@@ -56,6 +57,7 @@ function App() {
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedItem(null);
+    setHasLoginError(false);
   };
 
   const handleItemClick = (data) => {
@@ -114,11 +116,13 @@ function App() {
 
   const handleLoginSubmit = async (email, password) => {
     try {
+      setHasLoginError(false);
       await userContext.handleLogin(email, password);
       closeModal();
       navigate("/profile");
     } catch (error) {
       console.error("Login failed:", error);
+      setHasLoginError(true);
     }
   };
 
@@ -240,6 +244,8 @@ function App() {
               isOpen={isModalOpen === "login"}
               onClose={closeModal}
               onSubmit={handleLoginSubmit}
+              loginError={hasLoginError}
+              onSignUpClick={() => openModal("signup")}
             />
           )}
 
@@ -248,6 +254,7 @@ function App() {
               isOpen={isModalOpen === "signup"}
               onClose={closeModal}
               onSubmit={handleSignupSubmit}
+              onLoginClick={() => openModal("login")}
             />
           )}
           {isModalOpen === "editProfile" && (

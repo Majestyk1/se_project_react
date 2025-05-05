@@ -99,6 +99,12 @@
   max-width: 124px;
 }
 
+.modal__submit-btn:disabled {
+  background-color: gray;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
 .modal__submit-btn:hover {
   background-color: #00000099;
 }

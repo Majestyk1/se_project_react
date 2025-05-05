@@ -19,10 +19,15 @@
   border-radius: 8px;
 }
 
-.item__card-name {
-  border-radius: 4px;
+.item__card-container {
   position: absolute;
   top: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+.item__card-name {
+  border-radius: 4px;
   margin: 0;
   padding: 2px 12px;
   font-size: 14px;
@@ -32,9 +37,6 @@
 }
 
 .item__like-button {
-  position: absolute;
-  bottom: 12px;
-  right: 12px;
   background: transparent;
   border: none;
   cursor: pointer;
@@ -52,12 +54,10 @@
   .item__like-button-content::before {
   content: "❤️";
   position: absolute;
-  left: 0;
 }
 
 /* Show white heart on hover when active */
 .item__like-button_active:hover .item__like-button-content::before {
   content: "🤍";
   position: absolute;
-  left: 0;
 }
