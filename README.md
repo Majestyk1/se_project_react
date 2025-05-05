@@ -102,6 +102,10 @@ VITE_API_URL=http://localhost:3001
 3. Push to the branch (`git push origin feature/AmazingFeature`)
 4. Open a Pull Request
 
+## ⚙️ Backend repo
+
+-https://github.com/Majestyk1/se_project_express.git
+
 ## 📝 License
 
 This project is licensed under the ISC License.
