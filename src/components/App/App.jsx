@@ -23,7 +23,7 @@ import Profile from "../Profile/Profile";
 import { getItems, deleteItems, addItems } from "../../utils/api";
 import DeleteConfirmationModal from "../DeleteConfirmationModal/DeleteConfirmationModal";
 
-function App() {
+function AppContent() {
   const [weatherData, setWeatherData] = useState({
     temp: { F: 0, C: 0 },
     type: "",
@@ -271,12 +271,12 @@ function App() {
   );
 }
 
-function AppWrapper() {
+function App() {
   return (
     <CurrentUserProvider>
-      <App />
+      <AppContent />
     </CurrentUserProvider>
   );
 }
 
-export default AppWrapper;
+export default App;
