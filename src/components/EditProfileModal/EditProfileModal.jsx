@@ -9,6 +9,7 @@ function EditProfileModal({ isOpen, onClose, onSubmit }) {
   const [avatar, setAvatar] = useState("");
   const [nameError, setNameError] = useState("");
   const [avatarError, setAvatarError] = useState("");
+  const [isFormValid, setIsFormValid] = useState(false);
 
   // Initialize form with current user data when modal opens
   useEffect(() => {
@@ -59,6 +60,16 @@ function EditProfileModal({ isOpen, onClose, onSubmit }) {
     }
   };
 
+  const validateForm = () => {
+    const isNameValid = name.length >= 2 && name.length <= 30;
+    const isAvatarValid = avatar.length > 0;
+    setIsFormValid(isNameValid && isAvatarValid);
+  };
+
+  useEffect(() => {
+    validateForm();
+  }, [name, avatar]);
+
   return (
     <ModalWithForm
       isOpen={isOpen}
@@ -66,7 +77,7 @@ function EditProfileModal({ isOpen, onClose, onSubmit }) {
       onSubmit={handleSubmit}
       name="edit-profile"
       title="Edit Profile"
-      buttonText="Save changes"
+      disabled={!isFormValid}
     >
       <label htmlFor="signup-name" className="modal__label">
         Name
@@ -97,6 +108,13 @@ function EditProfileModal({ isOpen, onClose, onSubmit }) {
         />
         {avatarError && <span className="modal__error">{avatarError}</span>}
       </label>
+      <button
+        type="submit"
+        className="modal__profile-submit-btn"
+        disabled={!isFormValid}
+      >
+        Save changes
+      </button>
     </ModalWithForm>
   );
 }

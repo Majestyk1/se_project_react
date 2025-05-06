@@ -108,3 +108,8 @@
 .modal__submit-btn:hover {
   background-color: #00000099;
 }
+
+.modal__error {
+  color: #ff4d00; /* makes the error appear on a new line */
+  margin-top: 5px; /* adds some space between the input and error message */
+}
