@@ -1,5 +1,4 @@
-// First, we need the base URL for our API
-const BASE_URL = "http://localhost:3001";
+import { BASE_URL } from "./constants";
 
 // Signup function
 export const signup = ({ name, avatar, email, password }) => {

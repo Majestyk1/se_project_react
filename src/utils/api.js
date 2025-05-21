@@ -1,15 +1,15 @@
-const baseUrl = "http://localhost:3001";
+import { BASE_URL } from "./constants";
 
 const handleServerResponse = (res) => {
   return res.ok ? res.json() : Promise.reject(`Failed to fetch: ${res.status}`);
 };
 
 function getItems() {
-  return fetch(`${baseUrl}/items`).then(handleServerResponse);
+  return fetch(`${BASE_URL}/items`).then(handleServerResponse);
 }
 
 function deleteItems(itemId, token) {
-  return fetch(`${baseUrl}/items/${itemId}`, {
+  return fetch(`${BASE_URL}/items/${itemId}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -21,7 +21,7 @@ function addItems(item, token) {
   if (!item.name || !item.imageUrl || !item.weather) {
     return Promise.reject("Invalid item data");
   }
-  return fetch(`${baseUrl}/items`, {
+  return fetch(`${BASE_URL}/items`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -32,7 +32,7 @@ function addItems(item, token) {
 }
 
 function updateProfile(name, avatar, token) {
-  return fetch(`${baseUrl}/users/me`, {
+  return fetch(`${BASE_URL}/users/me`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
