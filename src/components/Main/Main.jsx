@@ -16,11 +16,9 @@ const Main = ({
     Array.isArray(clothingItems) ? clothingItems : []
   ).filter((item) => {
     return (
-      (item.weather === "cold" && weatherData.temp.F < 50) ||
-      (item.weather === "warm" &&
-        weatherData.temp.F >= 50 &&
-        weatherData.temp.F < 86) ||
-      (item.weather === "hot" && weatherData.temp.F >= 86)
+      (item.weather === "hot" && weatherData.temp.F > 86) ||
+      (item.weather === "warm" && weatherData.temp.F >= 66 && weatherData.temp.F <= 86) ||
+      (item.weather === "cold" && weatherData.temp.F < 66)
     );
   });
   return (
